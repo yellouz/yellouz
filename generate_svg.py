@@ -59,7 +59,6 @@ ASCII_ART = [line.replace("\xa0", " ").rstrip() for line in RAW_ASCII_ART]
 USERNAME = "yellouz"
 TITLE = "youssef@ellouz"
 
-# Empty tuple () adds a clean blank line break
 DETAILS = [
     ("OS", "Linux / Windows 11"),
     ("Uptime", uptime_str),
@@ -79,17 +78,17 @@ DETAILS = [
 ]
 
 # ========================================================
-# 4. CARD THEMES & ELEGANT BACKGROUNDS
+# 4. CARD THEMES & STYLES
 # ========================================================
 THEMES = {
     "dark": {
-        "bg": "#161b22",        # GitHub elevated card slate dark
+        "bg": "#161b22",        # GitHub elevated card dark slate
         "border": "#30363d",
-        "title": "#58a6ff",
-        "section": "#79c0ff",
-        "label": "#8b949e",
-        "value": "#c9d1d9",
-        "ascii": "#58a6ff"
+        "title": "#58a6ff",     # Title Accent
+        "section": "#79c0ff",   # Section Header Accent
+        "label": "#8b949e",     # Muted Gray for Dots & Divider Lines
+        "value": "#c9d1d9",     # Off-White Values
+        "ascii": "#58a6ff"      # ASCII Accent
     },
     "light": {
         "bg": "#f6f8fa",        # GitHub elevated card light grey
@@ -112,16 +111,15 @@ def escape_xml(text):
 def build_svg(theme_name):
     t = THEMES[theme_name]
     
-    # Tight line height to prevent ASCII stretching
-    line_height = 18
-    start_y = 28
+    # 15px font scaling
+    line_height = 21
+    start_y = 30
+    char_width_px = 9.0  # Width of 1 char in 15px JetBrains Mono
     
-    # Total card height strictly bound to ASCII Art height + symmetrical 18px padding
+    # Strictly bound height to ASCII Art length
     ascii_line_count = len(ASCII_ART)
     last_ascii_y = start_y + ((ascii_line_count - 1) * line_height)
-    svg_height = last_ascii_y + 21
-    
-    char_width_px = 7.8
+    svg_height = last_ascii_y + 24
     
     # Left Column Width
     max_ascii_chars = max(len(line) for line in ASCII_ART)
@@ -139,7 +137,7 @@ def build_svg(theme_name):
 
     TOTAL_RIGHT_CHARS = max(58, max_content_len)
     
-    gap_between_columns = 35
+    gap_between_columns = 40
     details_x = ascii_x + ascii_width_px + gap_between_columns
     details_width_px = int(TOTAL_RIGHT_CHARS * char_width_px)
     
@@ -148,9 +146,10 @@ def build_svg(theme_name):
     svg_lines = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{svg_width}" height="{svg_height}" viewBox="0 0 {svg_width} {svg_height}" fill="none">',
         '  <style>',
-        '    .base { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; font-size: 13px; }',
-        f'    .title {{ font-weight: bold; font-size: 14px; fill: {t["title"]}; }}',
-        f'    .section-title {{ font-weight: bold; font-size: 14px; fill: {t["section"]}; }}',
+        '    @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;display=swap");',
+        '    .base { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; font-size: 15px; }',
+        f'    .title {{ font-weight: bold; font-size: 16px; fill: {t["title"]}; }}',
+        f'    .section-title {{ font-weight: bold; font-size: 15px; fill: {t["section"]}; }}',
         f'    .label {{ font-weight: bold; fill: {t["label"]}; }}',
         f'    .value {{ fill: {t["value"]}; }}',
         f'    .ascii {{ fill: {t["ascii"]}; white-space: pre; }}',
@@ -158,22 +157,27 @@ def build_svg(theme_name):
         f'  <rect width="{svg_width}" height="{svg_height}" rx="12" fill="{t["bg"]}" stroke="{t["border"]}" stroke-width="1.5"/>'
     ]
     
-    # Render ASCII Art (Left)
+    # Render ASCII Art (Left Column)
     current_y = start_y
     for line in ASCII_ART:
         svg_lines.append(f'  <text x="{ascii_x}" y="{current_y}" class="base ascii" xml:space="preserve">{escape_xml(line)}</text>')
         current_y += line_height
         
-    # Render Title (Right Header)
+    # Render Main Title Header (Right Column)
     current_y = start_y
-    title_dashes = "-" * (TOTAL_RIGHT_CHARS - len(TITLE) - 1)
-    svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base title">{escape_xml(TITLE)} <tspan class="label">{title_dashes}</tspan></text>')
+    title_prefix = f"{TITLE} "
+    title_dashes = "-" * max(1, TOTAL_RIGHT_CHARS - len(title_prefix))
+    svg_lines.append(
+        f'  <text x="{details_x}" y="{current_y}" class="base" xml:space="preserve">'
+        f'<tspan class="title">{escape_xml(title_prefix)}</tspan>'
+        f'<tspan class="label">{title_dashes}</tspan>'
+        f'</text>'
+    )
     current_y += line_height
     
-    # Render Details
+    # Render Details & Section Dividers
     for item in DETAILS:
         if not item:
-            # Blank line space
             current_y += line_height
             continue
             
@@ -207,7 +211,7 @@ def build_svg(theme_name):
     filename = f"neofetch-{theme_name}.svg"
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(svg_lines))
-    print(f"Generated {filename} successfully! (Card Height: {svg_height}px)")
+    print(f"Generated {filename} successfully!")
 
 if __name__ == "__main__":
     build_svg("dark")
