@@ -61,11 +61,13 @@ TITLE = "youssef@ellouz"
 
 # Format for special LOC tuple: ("LOC", "Label", "Total Lines", "Additions++", "Deletions--")
 DETAILS = [
-    ("OS", "Linux / Windows 11"),
+    ("OS", "Windows 11"),
     ("Uptime", uptime_str),
     ("Host", "Data Analytics & Development"),
-    ("IDE", "VS Code, Obsidian, Visual Studio"),
-    ("Languages", "Python, C#, C++, Java"),
+    ("IDE", "VS Code, Obsidian"),
+    ("Languages.Programming", "Python, C#, C/C++, Java"),
+    ("Languages.Computer", "HTML, CSS, JSON, LaTeX, Markdown"),
+    ("Languages.World", "Arabic, Tamazight, English, Frensh"),
     ("Hobbies", "Gym, Chess, Self-hosting"),
     (),
     ("SECTION", "Contact"),

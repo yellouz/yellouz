@@ -34,18 +34,20 @@
   <text x="25" y="514" class="base ascii" xml:space="preserve">       __,&amp;   @   @@@@@@  @@@@@@   @   &amp;,__</text>
   <text x="25" y="538" class="base ascii" xml:space="preserve">_gg     @@@   @$@@@@@@@  @@@@@@@@$@   @@@     gg_</text>
   <text x="564" y="34" class="base" xml:space="preserve"><tspan class="title">youssef@ellouz </tspan><tspan class="label">───────────────────────────────────── - ─── -</tspan></text>
-  <text x="564" y="58" class="base" xml:space="preserve"><tspan class="label">. OS: </tspan><tspan class="label">...................................</tspan><tspan class="value"> Linux / Windows 11</tspan></text>
+  <text x="564" y="58" class="base" xml:space="preserve"><tspan class="label">. OS: </tspan><tspan class="label">...........................................</tspan><tspan class="value"> Windows 11</tspan></text>
   <text x="564" y="82" class="base" xml:space="preserve"><tspan class="label">. Uptime: </tspan><tspan class="label">......................</tspan><tspan class="value"> 21 years, 3 months, 16 days</tspan></text>
   <text x="564" y="106" class="base" xml:space="preserve"><tspan class="label">. Host: </tspan><tspan class="label">.......................</tspan><tspan class="value"> Data Analytics &amp; Development</tspan></text>
-  <text x="564" y="130" class="base" xml:space="preserve"><tspan class="label">. IDE: </tspan><tspan class="label">....................</tspan><tspan class="value"> VS Code, Obsidian, Visual Studio</tspan></text>
-  <text x="564" y="154" class="base" xml:space="preserve"><tspan class="label">. Languages: </tspan><tspan class="label">.........................</tspan><tspan class="value"> Python, C#, C++, Java</tspan></text>
-  <text x="564" y="178" class="base" xml:space="preserve"><tspan class="label">. Hobbies: </tspan><tspan class="label">........................</tspan><tspan class="value"> Gym, Chess, Self-hosting</tspan></text>
-  <text x="564" y="226" class="base" xml:space="preserve"><tspan class="section-title">- Contact </tspan><tspan class="label">────────────────────────────────────────── - ─── -</tspan></text>
-  <text x="564" y="250" class="base" xml:space="preserve"><tspan class="label">. GitHub: </tspan><tspan class="label">...............................</tspan><tspan class="value"> github.com/yellouz</tspan></text>
-  <text x="564" y="274" class="base" xml:space="preserve"><tspan class="label">. Email: </tspan><tspan class="label">...............................</tspan><tspan class="value"> youssef@example.com</tspan></text>
-  <text x="564" y="322" class="base" xml:space="preserve"><tspan class="section-title">- GitHub Stats </tspan><tspan class="label">───────────────────────────────────── - ─── -</tspan></text>
-  <text x="564" y="346" class="base" xml:space="preserve"><tspan class="label">. Repos: </tspan><tspan class="label">................................................</tspan><tspan class="value"> 15</tspan></text>
-  <text x="564" y="370" class="base" xml:space="preserve"><tspan class="label">. Commits: </tspan><tspan class="label">...........................................</tspan><tspan class="value"> 1,420</tspan></text>
-  <text x="564" y="394" class="base" xml:space="preserve"><tspan class="label">. Stars: </tspan><tspan class="label">................................................</tspan><tspan class="value"> 48</tspan></text>
-  <text x="564" y="418" class="base" xml:space="preserve"><tspan class="label">. Lines of Code: </tspan><tspan class="label">...........</tspan><tspan class="value"> 446,276 ( </tspan><tspan class="add">523,178++</tspan><tspan class="value">, </tspan><tspan class="del">76,902--</tspan><tspan class="value"> )</tspan></text>
+  <text x="564" y="130" class="base" xml:space="preserve"><tspan class="label">. IDE: </tspan><tspan class="label">...................................</tspan><tspan class="value"> VS Code, Obsidian</tspan></text>
+  <text x="564" y="154" class="base" xml:space="preserve"><tspan class="label">. Languages.Programming: </tspan><tspan class="label">...........</tspan><tspan class="value"> Python, C#, C/C++, Java</tspan></text>
+  <text x="564" y="178" class="base" xml:space="preserve"><tspan class="label">. Languages.Computer: </tspan><tspan class="label">.....</tspan><tspan class="value"> HTML, CSS, JSON, LaTeX, Markdown</tspan></text>
+  <text x="564" y="202" class="base" xml:space="preserve"><tspan class="label">. Languages.World: </tspan><tspan class="label">......</tspan><tspan class="value"> Arabic, Tamazight, English, Frensh</tspan></text>
+  <text x="564" y="226" class="base" xml:space="preserve"><tspan class="label">. Hobbies: </tspan><tspan class="label">........................</tspan><tspan class="value"> Gym, Chess, Self-hosting</tspan></text>
+  <text x="564" y="274" class="base" xml:space="preserve"><tspan class="section-title">- Contact </tspan><tspan class="label">────────────────────────────────────────── - ─── -</tspan></text>
+  <text x="564" y="298" class="base" xml:space="preserve"><tspan class="label">. GitHub: </tspan><tspan class="label">...............................</tspan><tspan class="value"> github.com/yellouz</tspan></text>
+  <text x="564" y="322" class="base" xml:space="preserve"><tspan class="label">. Email: </tspan><tspan class="label">...............................</tspan><tspan class="value"> youssef@example.com</tspan></text>
+  <text x="564" y="370" class="base" xml:space="preserve"><tspan class="section-title">- GitHub Stats </tspan><tspan class="label">───────────────────────────────────── - ─── -</tspan></text>
+  <text x="564" y="394" class="base" xml:space="preserve"><tspan class="label">. Repos: </tspan><tspan class="label">................................................</tspan><tspan class="value"> 15</tspan></text>
+  <text x="564" y="418" class="base" xml:space="preserve"><tspan class="label">. Commits: </tspan><tspan class="label">...........................................</tspan><tspan class="value"> 1,420</tspan></text>
+  <text x="564" y="442" class="base" xml:space="preserve"><tspan class="label">. Stars: </tspan><tspan class="label">................................................</tspan><tspan class="value"> 48</tspan></text>
+  <text x="564" y="466" class="base" xml:space="preserve"><tspan class="label">. Lines of Code: </tspan><tspan class="label">...........</tspan><tspan class="value"> 446,276 ( </tspan><tspan class="add">523,178++</tspan><tspan class="value">, </tspan><tspan class="del">76,902--</tspan><tspan class="value"> )</tspan></text>
 </svg>
