@@ -199,7 +199,7 @@ DETAILS = [
     (),
     ("SECTION", "Contact"),
     ("GitHub", f"github.com/{USERNAME}"),
-    ("Email", "youssef@example.com"),
+    ("Email", "youssefellouz303@gmail.com"),
     (),
     ("SECTION", "GitHub Stats"),
     ("Repos", repos_str),
