@@ -1,31 +1,31 @@
 import os
 
 # ========================================================
-# 1. YOUR CLEANED ASCII ART
+# 1. YOUR ASCII ART
 # ========================================================
 ASCII_ART = [
-    r"                         __,,,__",
-    r"                    _,g$        @g.",
-    r"                  _g              g_",
-    r"                 ,                  $_",
-    r"                g    $$$@$$$$@@@      w",
-    r"               _  $$ $$@$@$$$$$ $$$$",
-    r"               $ @@ $$$$$$$$@$$ @@$$  P",
-    r"                 $       @@$$        L",
-    r"               J  $      $@ @",
-    r"              ,g $@         $        @,",
-    r"               &$$ $$ $  $ $@       $",
-    r"               $@$$$@$$ @&@$$$$@@@ $$$@",
-    r"                $@$@@$$ $@$$$$ $@  @@@",
-    r"                 @ &$ @@$    $  $@$$",
-    r"                 $@ @    @ $@$$ $   F",
-    r"                  $@$ $$   $",
-    r"                 _  $$$$$   $  @$$ g",
-    r"                y@@  $ $@@$$      @@@ ;",
-    r"              y @@@  @            @@@@@  r",
-    r"          _gg  @@@@   $$$    $     @@@@@@ &gg_",
-    r"    __,&   @   @@@@@@    @    $$  @@@@@@",
-    r"_gg     @@@   @$@@@@@@@         @@@@@@@@     @@@"
+    r"                            __,,,__",
+    r"                        _,g$        @g.",
+    r"                      _g              g_",
+    r"                     ,                  $_",
+    r"                    g    $$$@$$$$@@@      w",
+    r"                   _  $$ $$@$@$$$$$ $$$$",
+    r"                   $ @@ $$$$$$$$@$$ @@$$  P",
+    r"                     $       @@$$        L",
+    r"                   J  $      $@ @",
+    r"                  ,g $@         $        @,",
+    r"                   &$$ $$ $  $ $@       $",
+    r"                   $@$$$@$$ @&@$$$$@@@ $$$@",
+    r"                    $@$@@$$ $@$$$$ $@  @@@",
+    r"                     @ &$ @@$    $  $@$$",
+    r"                     $@ @    @ $@$$ $   F",
+    r"                      $@$ $$   $",
+    r"                     _  $$$$$   $  @$$ g",
+    r"                    y@@  $ $@@$$      @@@ ;",
+    r"                  y @@@  @            @@@@@  r",
+    r"              _gg  @@@@   $$$    $     @@@@@@ &gg_",
+    r"        __,&   @   @@@@@@    @    $$  @@@@@@",
+    r"    _gg     @@@   @$@@@@@@@         @@@@@@@@     @@@"
 ]
 
 # ========================================================
@@ -35,7 +35,7 @@ USERNAME = "yellouz"
 TITLE = "youssef@ellouz"
 
 DETAILS = [
-    ("OS", "Windows 11"),
+    ("OS", "Linux / Windows 11"),
     ("Uptime", "22 years"),
     ("Host", "Data Analytics & Development"),
     ("IDE", "VS Code, Obsidian, Visual Studio"),
@@ -50,7 +50,29 @@ DETAILS = [
 ]
 
 # ========================================================
-# 3. SVG THEMES & RENDERER
+# 3. AUTO-CALIBRATION LOGIC
+# ========================================================
+def calibrate_ascii(lines):
+    """Automatically strips unnecessary leading spaces and measures exact width."""
+    cleaned_lines = [line.rstrip() for line in lines]
+    non_empty = [line for line in cleaned_lines if line.strip()]
+    
+    if not non_empty:
+        return cleaned_lines, 0
+        
+    # Find minimum leading whitespace across all lines
+    min_leading = min(len(line) - len(line.lstrip()) for line in non_empty)
+    
+    # Strip common leading whitespace
+    dedented_lines = [line[min_leading:] if len(line) >= min_leading else "" for line in cleaned_lines]
+    
+    # Get maximum character length
+    max_char_len = max(len(line) for line in dedented_lines)
+    
+    return dedented_lines, max_char_len
+
+# ========================================================
+# 4. SVG THEMES & RENDERER
 # ========================================================
 THEMES = {
     "dark": {
@@ -72,24 +94,28 @@ THEMES = {
 }
 
 def escape_xml(text):
-    """Safely escapes XML characters so SVG parsers never throw errors."""
     return (text.replace("&", "&amp;")
                 .replace("<", "&lt;")
                 .replace(">", "&gt;")
                 .replace('"', "&quot;")
                 .replace("'", "&apos;"))
 
-def build_svg(theme_name):
+def build_svg(theme_name, ascii_lines, max_ascii_len):
     t = THEMES[theme_name]
     
     line_height = 20
     start_y = 35
-    total_lines = max(len(ASCII_ART), len(DETAILS) + 1)
+    total_lines = max(len(ascii_lines), len(DETAILS) + 1)
     svg_height = start_y + (total_lines * line_height) + 20
-    svg_width = 860  # Widen to comfortably fit ASCII art + stats
     
-    ascii_x = 20
-    details_x = 380  # X offset for the right column
+    # --- Dynamic Positioning Calculations ---
+    ascii_x = 25
+    char_width_px = 7.8  # Width of 1 char in 13px JetBrains Mono / Consolas
+    ascii_width_px = int(max_ascii_len * char_width_px)
+    
+    # Place stats column smoothly 35px after the ASCII art ends
+    details_x = ascii_x + ascii_width_px + 35
+    svg_width = details_x + 390  # Room for the stats text block
     
     svg_lines = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{svg_width}" height="{svg_height}" viewBox="0 0 {svg_width} {svg_height}" fill="none">',
@@ -105,7 +131,7 @@ def build_svg(theme_name):
     
     # Render ASCII Art (Left)
     current_y = start_y
-    for line in ASCII_ART:
+    for line in ascii_lines:
         svg_lines.append(f'  <text x="{ascii_x}" y="{current_y}" class="base ascii" xml:space="preserve">{escape_xml(line)}</text>')
         current_y += line_height
         
@@ -115,7 +141,7 @@ def build_svg(theme_name):
     svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base title">{escape_xml(TITLE)} <tspan class="label">{divider}</tspan></text>')
     current_y += line_height
     
-    # Render Details
+    # Render Details (Right)
     for label, val in DETAILS:
         if label == "---":
             svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base label">{val}</text>')
@@ -135,8 +161,9 @@ def build_svg(theme_name):
     filename = f"neofetch-{theme_name}.svg"
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(svg_lines))
-    print(f"Generated {filename} successfully!")
+    print(f"Generated {filename} (Width: {svg_width}px, Stats X-offset: {details_x}px)")
 
 if __name__ == "__main__":
-    build_svg("dark")
-    build_svg("light")
+    calibrated_art, max_len = calibrate_ascii(ASCII_ART)
+    build_svg("dark", calibrated_art, max_len)
+    build_svg("light", calibrated_art, max_len)
