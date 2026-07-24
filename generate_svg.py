@@ -59,6 +59,7 @@ ASCII_ART = [line.replace("\xa0", " ").rstrip() for line in RAW_ASCII_ART]
 USERNAME = "yellouz"
 TITLE = "youssef@ellouz"
 
+# Format for special LOC tuple: ("LOC", "Label", "Total Lines", "Additions++", "Deletions--")
 DETAILS = [
     ("OS", "Linux / Windows 11"),
     ("Uptime", uptime_str),
@@ -74,7 +75,8 @@ DETAILS = [
     ("SECTION", "GitHub Stats"),
     ("Repos", "15"),
     ("Commits", "1,420"),
-    ("Stars", "48")
+    ("Stars", "48"),  # Stars received on your repos
+    ("LOC", "Lines of Code", "446,276", "523,178++", "76,902--")
 ]
 
 # ========================================================
@@ -86,9 +88,11 @@ THEMES = {
         "border": "#30363d",
         "title": "#58a6ff",     # Title Accent
         "section": "#79c0ff",   # Section Header Accent
-        "label": "#8b949e",     # Muted Gray for Dots & Divider Lines
+        "label": "#8b949e",     # Muted Gray
         "value": "#c9d1d9",     # Off-White Values
-        "ascii": "#58a6ff"      # ASCII Accent
+        "ascii": "#58a6ff",     # ASCII Accent
+        "add": "#3fb950",       # Green for Additions (++)
+        "del": "#f85149"        # Red for Deletions (--)
     },
     "light": {
         "bg": "#f6f8fa",        # GitHub elevated card light grey
@@ -97,7 +101,9 @@ THEMES = {
         "section": "#0550ae",
         "label": "#57606a",
         "value": "#24292f",
-        "ascii": "#0969da"
+        "ascii": "#0969da",
+        "add": "#1a7f37",       # Darker Green for Light Mode
+        "del": "#cf222e"        # Darker Red for Light Mode
     }
 }
 
@@ -111,12 +117,11 @@ def escape_xml(text):
 def build_svg(theme_name):
     t = THEMES[theme_name]
     
-    # Scaled for 17px font
     line_height = 24
     start_y = 34
     char_width_px = 10.2  # Character width in 17px JetBrains Mono
     
-    # Bound height strictly to 22-line ASCII Art length
+    # Strictly bound height to 22-line ASCII Art length
     ascii_line_count = len(ASCII_ART)
     last_ascii_y = start_y + ((ascii_line_count - 1) * line_height)
     svg_height = last_ascii_y + 26
@@ -129,13 +134,20 @@ def build_svg(theme_name):
     # Calculate Required Character Width for Right Column
     max_content_len = len(TITLE) + 12
     for item in DETAILS:
-        if item and item[0] != "SECTION":
+        if not item:
+            continue
+        if item[0] == "SECTION":
+            continue
+        elif item[0] == "LOC":
+            _, label, total, add_val, del_val = item
+            visible_str = f". {label}: ... {total} ( {add_val}, {del_val} )"
+            max_content_len = max(max_content_len, len(visible_str))
+        else:
             label, val = item
             min_line_len = len(f". {label}: ") + len(f" {val}") + 3
-            if min_line_len > max_content_len:
-                max_content_len = min_line_len
+            max_content_len = max(max_content_len, min_line_len)
 
-    TOTAL_RIGHT_CHARS = max(58, max_content_len)
+    TOTAL_RIGHT_CHARS = max(60, max_content_len)
     
     gap_between_columns = 40
     details_x = ascii_x + ascii_width_px + gap_between_columns
@@ -152,18 +164,20 @@ def build_svg(theme_name):
         f'    .section-title {{ font-weight: bold; font-size: 18px; fill: {t["section"]}; }}',
         f'    .label {{ font-weight: bold; fill: {t["label"]}; }}',
         f'    .value {{ fill: {t["value"]}; }}',
+        f'    .add {{ font-weight: bold; fill: {t["add"]}; }}',
+        f'    .del {{ font-weight: bold; fill: {t["del"]}; }}',
         f'    .ascii {{ fill: {t["ascii"]}; white-space: pre; }}',
         '  </style>',
         f'  <rect width="{svg_width}" height="{svg_height}" rx="12" fill="{t["bg"]}" stroke="{t["border"]}" stroke-width="1.5"/>'
     ]
     
-    # Render ASCII Art (Left)
+    # Render ASCII Art (Left Column)
     current_y = start_y
     for line in ASCII_ART:
         svg_lines.append(f'  <text x="{ascii_x}" y="{current_y}" class="base ascii" xml:space="preserve">{escape_xml(line)}</text>')
         current_y += line_height
         
-    # Render Title Header (Right)
+    # Render Main Title Header (Right Column)
     current_y = start_y
     title_prefix = f"{TITLE} "
     title_suffix = " - ─── -"
@@ -184,8 +198,8 @@ def build_svg(theme_name):
             current_y += line_height
             continue
             
-        label, val = item
-        if label == "SECTION":
+        if item[0] == "SECTION":
+            _, val = item
             prefix = f"- {val} "
             suffix = " - ─── -"
             fill_count = max(1, TOTAL_RIGHT_CHARS - len(prefix) - len(suffix))
@@ -197,7 +211,27 @@ def build_svg(theme_name):
                 f'<tspan class="label">{dashes}{suffix}</tspan>'
                 f'</text>'
             )
+        elif item[0] == "LOC":
+            _, label, total_val, add_val, del_val = item
+            prefix = f". {label}: "
+            suffix_plain = f" {total_val} ( {add_val}, {del_val} )"
+            
+            dots_count = max(1, TOTAL_RIGHT_CHARS - len(prefix) - len(suffix_plain))
+            dots = "." * dots_count
+            
+            svg_lines.append(
+                f'  <text x="{details_x}" y="{current_y}" class="base" xml:space="preserve">'
+                f'<tspan class="label">{escape_xml(prefix)}</tspan>'
+                f'<tspan class="label">{dots}</tspan>'
+                f'<tspan class="value"> {escape_xml(total_val)} ( </tspan>'
+                f'<tspan class="add">{escape_xml(add_val)}</tspan>'
+                f'<tspan class="value">, </tspan>'
+                f'<tspan class="del">{escape_xml(del_val)}</tspan>'
+                f'<tspan class="value"> )</tspan>'
+                f'</text>'
+            )
         else:
+            label, val = item
             prefix = f". {label}: "
             suffix = f" {val}"
             dots_count = max(1, TOTAL_RIGHT_CHARS - len(prefix) - len(suffix))
