@@ -110,21 +110,11 @@ def build_svg(theme_name):
     t = THEMES[theme_name]
     
     line_height = 20
-    start_y = 35
+    start_y = 30
     
-    # Measure column lengths
-    ascii_line_count = len(ASCII_ART)
-    details_line_count = len(DETAILS) + 1  # Including title
-    
-    # Calculate vertical spacing adjustment to stretch details column evenly
-    num_sections = sum(1 for label, _ in DETAILS if label == "SECTION")
-    height_difference = max(0, (ascii_line_count - details_line_count) * line_height)
-    
-    # Distribute the height gap evenly before section dividers
-    extra_section_padding = height_difference // max(1, num_sections)
-    
-    total_lines = max(ascii_line_count, details_line_count)
-    svg_height = start_y + (total_lines * line_height) + height_difference + 20
+    # Calculate exact tight height based on the maximum line count (ASCII Art = 22 lines)
+    total_lines = max(len(ASCII_ART), len(DETAILS) + 1)
+    svg_height = start_y + (total_lines * line_height) + 15
     
     char_width_px = 7.8
     
@@ -175,10 +165,9 @@ def build_svg(theme_name):
     svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base title">{escape_xml(TITLE)} <tspan class="label">{title_dashes}</tspan></text>')
     current_y += line_height
     
-    # Render Details with Dynamic Vertical Padding
+    # Render Details with Uniform 20px Line Height (No awkward gaps)
     for label, val in DETAILS:
         if label == "SECTION":
-            current_y += extra_section_padding
             prefix = f"- {val} "
             dashes = "-" * max(1, TOTAL_RIGHT_CHARS - len(prefix))
             svg_lines.append(
