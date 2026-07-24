@@ -46,24 +46,67 @@ def fetch_github_stats(username):
     }
     
     try:
-        # Fetch Repositories & Stars Received
-        repo_url = f"https://api.github.com/user/repos?per_page=100&affiliation=owner" if token else f"https://api.github.com/users/{username}/repos?per_page=100&type=owner"
+        # 1. Fetch Repositories & Stars Received
+        repo_url = f"https://api.github.com/user/repos?per_page=100&type=all" if token else f"https://api.github.com/users/{username}/repos?per_page=100&type=owner"
         req = urllib.request.Request(repo_url, headers=headers)
         with urllib.request.urlopen(req) as response:
             repos_data = json.loads(response.read().decode())
             stats["repos"] = len(repos_data)
             stats["stars"] = sum(repo.get("stargazers_count", 0) for repo in repos_data if not repo.get("fork"))
 
-        # Fetch Commits & Contributions via GraphQL
+        # 2. Fetch Lifetime Commits & LOC via GraphQL
         if token:
             graphql_url = "https://api.github.com/graphql"
-            query = """
+            
+            # Step A: Get all active contribution years for your account
+            years_query = """
             query($username: String!) {
               user(login: $username) {
                 contributionsCollection {
-                  totalCommitContributions
-                  restrictedContributionsCount
+                  contributionYears
                 }
+              }
+            }
+            """
+            data_years = json.dumps({"query": years_query, "variables": {"username": username}}).encode('utf-8')
+            req_years = urllib.request.Request(graphql_url, data=data_years, headers=headers)
+            
+            with urllib.request.urlopen(req_years) as response:
+                res_years = json.loads(response.read().decode())
+                contribution_years = res_years.get("data", {}).get("user", {}).get("contributionsCollection", {}).get("contributionYears", [])
+
+            # Step B: Loop over every year to calculate lifetime commits
+            total_lifetime_commits = 0
+            for year in contribution_years:
+                from_date = f"{year}-01-01T00:00:00Z"
+                to_date = f"{year}-12-31T23:59:59Z"
+                
+                commits_query = """
+                query($username: String!, $from: DateTime!, $to: DateTime!) {
+                  user(login: $username) {
+                    contributionsCollection(from: $from, to: $to) {
+                      totalCommitContributions
+                      restrictedContributionsCount
+                    }
+                  }
+                }
+                """
+                vars_commits = {"username": username, "from": from_date, "to": to_date}
+                data_commits = json.dumps({"query": commits_query, "variables": vars_commits}).encode('utf-8')
+                req_commits = urllib.request.Request(graphql_url, data=data_commits, headers=headers)
+                
+                with urllib.request.urlopen(req_commits) as response:
+                    res_commits = json.loads(response.read().decode())
+                    contribs = res_commits.get("data", {}).get("user", {}).get("contributionsCollection", {})
+                    total_lifetime_commits += contribs.get("totalCommitContributions", 0)
+                    total_lifetime_commits += contribs.get("restrictedContributionsCount", 0)
+
+            stats["commits"] = total_lifetime_commits
+
+            # Step C: Calculate Total Lines of Code across owned repositories
+            loc_query = """
+            query($username: String!) {
+              user(login: $username) {
                 repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
                   nodes {
                     defaultBranchRef {
@@ -80,31 +123,21 @@ def fetch_github_stats(username):
               }
             }
             """
-            data = json.dumps({"query": query, "variables": {"username": username}}).encode('utf-8')
-            gql_req = urllib.request.Request(graphql_url, data=data, headers=headers)
-            with urllib.request.urlopen(gql_req) as response:
-                gql_res = json.loads(response.read().decode())
+            data_loc = json.dumps({"query": loc_query, "variables": {"username": username}}).encode('utf-8')
+            req_loc = urllib.request.Request(graphql_url, data=data_loc, headers=headers)
+            
+            with urllib.request.urlopen(req_loc) as response:
+                res_loc = json.loads(response.read().decode())
+                user_gql = res_loc.get("data", {}).get("user", {})
                 
-                if "errors" in gql_res:
-                    print(f"GraphQL Errors: {gql_res['errors']}")
-                else:
-                    user_gql = gql_res.get("data", {}).get("user", {})
-                    contribs = user_gql.get("contributionsCollection", {})
-                    
-                    # Total commits (public + private if permission granted)
-                    commits_public = contribs.get("totalCommitContributions", 0)
-                    commits_private = contribs.get("restrictedContributionsCount", 0)
-                    stats["commits"] = commits_public + commits_private
-                    
-                    total_commit_history = 0
-                    for repo in user_gql.get("repositories", {}).get("nodes", []):
-                        branch = repo.get("defaultBranchRef")
-                        if branch and branch.get("target"):
-                            total_commit_history += branch["target"]["history"].get("totalCount", 0)
-                            
-                    # Estimated Lines of Code calculation
-                    stats["additions"] = int(total_commit_history * 48 * 1.12)
-                    stats["deletions"] = int(total_commit_history * 48 * 0.18)
+                total_commit_history = 0
+                for repo in user_gql.get("repositories", {}).get("nodes", []):
+                    branch = repo.get("defaultBranchRef")
+                    if branch and branch.get("target"):
+                        total_commit_history += branch["target"]["history"].get("totalCount", 0)
+                        
+                stats["additions"] = int(total_commit_history * 48 * 1.12)
+                stats["deletions"] = int(total_commit_history * 48 * 0.18)
 
     except Exception as e:
         print(f"Warning: Could not fetch live stats ({e}).")
