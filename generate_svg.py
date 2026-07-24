@@ -31,15 +31,15 @@ RAW_ASCII_ART = [
 ASCII_ART = [line.replace("\xa0", " ").rstrip() for line in RAW_ASCII_ART]
 
 # ========================================================
-# 2. PROFILE DETAILS & STATS (With Sections)
+# 2. PROFILE DETAILS & STATS (Grouped by Sections)
 # ========================================================
 USERNAME = "yellouz"
 TITLE = "youssef@ellouz"
 
-# Use ("SECTION", "Section Name") to create divider bars like - Contact -----------
+# Format: ("SECTION", "Section Name") creates a styled blue section header
 DETAILS = [
     ("OS", "Linux / Windows 11"),
-    ("Uptime", "22 years"),
+    ("Uptime", "22 years, 6 months"),
     ("Host", "Data Analytics & Development"),
     ("IDE", "VS Code, Obsidian, Visual Studio"),
     ("Languages", "Python, C#, C++, Java"),
@@ -54,24 +54,26 @@ DETAILS = [
 ]
 
 # ========================================================
-# 3. SVG THEMES & RIGHT-ALIGNMENT RENDERER
+# 3. SVG THEMES & BLUE COLOR PALETTE
 # ========================================================
 THEMES = {
     "dark": {
         "bg": "#0d1117",
         "border": "#30363d",
-        "title": "#58a6ff",
-        "label": "#8b949e",
-        "value": "#c9d1d9",
-        "ascii": "#58a6ff"
+        "title": "#58a6ff",      # Light Blue Accent
+        "section": "#79c0ff",    # Vibrant Blue for Sections
+        "label": "#8b949e",      # Muted Gray for Labels & Dots
+        "value": "#c9d1d9",      # Off-White for Values
+        "ascii": "#58a6ff"       # Blue for ASCII Avatar
     },
     "light": {
         "bg": "#ffffff",
         "border": "#d0d7de",
-        "title": "#0969da",
-        "label": "#57606a",
-        "value": "#24292f",
-        "ascii": "#0969da"
+        "title": "#0969da",      # Medium Blue Accent
+        "section": "#0550ae",    # Deep Blue for Sections
+        "label": "#57606a",      # Muted Gray for Labels & Dots
+        "value": "#24292f",      # Dark Charcoal for Values
+        "ascii": "#0969da"       # Blue for ASCII Avatar
     }
 }
 
@@ -97,31 +99,29 @@ def build_svg(theme_name):
     ascii_width_px = int(max_ascii_chars * char_width_px)
     ascii_x = 25
     
-    # --- 2. Calculate Fixed Line Width for Right Column ---
-    # Find longest content to set a uniform TOTAL_RIGHT_CHARS width
+    # --- 2. Right Column Calculations ---
     max_content_len = len(TITLE) + 10
     for item in DETAILS:
         label, val = item
         if label != "SECTION":
-            min_line_len = len(f". {label}: ") + len(f" {val}") + 3  # label + min 3 dots + val
+            min_line_len = len(f". {label}: ") + len(f" {val}") + 3
             if min_line_len > max_content_len:
                 max_content_len = min_line_len
 
-    # Set total column width (at least 56 characters wide)
-    TOTAL_RIGHT_CHARS = max(56, max_content_len)
+    TOTAL_RIGHT_CHARS = max(58, max_content_len)
     
     gap_between_columns = 35
     details_x = ascii_x + ascii_width_px + gap_between_columns
     details_width_px = int(TOTAL_RIGHT_CHARS * char_width_px)
     
-    # Dynamic Card Width
     svg_width = details_x + details_width_px + 30
     
     svg_lines = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{svg_width}" height="{svg_height}" viewBox="0 0 {svg_width} {svg_height}" fill="none">',
         '  <style>',
         '    .base { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; font-size: 13px; }',
-        f'    .title {{ font-weight: bold; fill: {t["title"]}; }}',
+        f'    .title {{ font-weight: bold; font-size: 14px; fill: {t["title"]}; }}',
+        f'    .section-title {{ font-weight: bold; font-size: 14px; fill: {t["section"]}; }}',
         f'    .label {{ font-weight: bold; fill: {t["label"]}; }}',
         f'    .value {{ fill: {t["value"]}; }}',
         f'    .ascii {{ fill: {t["ascii"]}; white-space: pre; }}',
@@ -141,17 +141,20 @@ def build_svg(theme_name):
     svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base title">{escape_xml(TITLE)} <tspan class="label">{title_dashes}</tspan></text>')
     current_y += line_height
     
-    # Render Details with Dynamic Dot Fill for Right Alignment
+    # Render Details & Distinct Sections
     for label, val in DETAILS:
         if label == "SECTION":
-            # Render section divider e.g. - Contact -----------------------
-            dashes = "-" * (TOTAL_RIGHT_CHARS - len(val) - 3)
-            svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base label">- {escape_xml(val)} {dashes}</text>')
+            prefix = f"- {val} "
+            dashes = "-" * max(1, TOTAL_RIGHT_CHARS - len(prefix))
+            svg_lines.append(
+                f'  <text x="{details_x}" y="{current_y}" class="base" xml:space="preserve">'
+                f'<tspan class="section-title">{escape_xml(prefix)}</tspan>'
+                f'<tspan class="label">{dashes}</tspan>'
+                f'</text>'
+            )
         else:
             prefix = f". {label}: "
             suffix = f" {val}"
-            
-            # Calculate exactly how many dots are needed to reach TOTAL_RIGHT_CHARS
             dots_count = max(1, TOTAL_RIGHT_CHARS - len(prefix) - len(suffix))
             dots = "." * dots_count
             
@@ -169,7 +172,7 @@ def build_svg(theme_name):
     filename = f"neofetch-{theme_name}.svg"
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(svg_lines))
-    print(f"Generated {filename} (Total Right Column Width: {TOTAL_RIGHT_CHARS} chars)")
+    print(f"Generated {filename} successfully!")
 
 if __name__ == "__main__":
     build_svg("dark")

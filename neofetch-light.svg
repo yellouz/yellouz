@@ -1,12 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="908" height="495" viewBox="0 0 908 495" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="924" height="495" viewBox="0 0 924 495" fill="none">
   <style>
     .base { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; font-size: 13px; }
-    .title { font-weight: bold; fill: #0969da; }
+    .title { font-weight: bold; font-size: 14px; fill: #0969da; }
+    .section-title { font-weight: bold; font-size: 14px; fill: #0550ae; }
     .label { font-weight: bold; fill: #57606a; }
     .value { fill: #24292f; }
     .ascii { fill: #0969da; white-space: pre; }
   </style>
-  <rect width="908" height="495" rx="12" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <rect width="924" height="495" rx="12" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
   <text x="25" y="35" class="base ascii" xml:space="preserve">                    __,,,__</text>
   <text x="25" y="55" class="base ascii" xml:space="preserve">                _,g$        $g,_</text>
   <text x="25" y="75" class="base ascii" xml:space="preserve">               _g              g_</text>
@@ -29,18 +30,18 @@
   <text x="25" y="415" class="base ascii" xml:space="preserve">       _gg  @@@@   $$$     $$$   @@@@  gg_</text>
   <text x="25" y="435" class="base ascii" xml:space="preserve">       __,&amp;   @   @@@@@@  @@@@@@   @   &amp;,__</text>
   <text x="25" y="455" class="base ascii" xml:space="preserve">_gg     @@@   @$@@@@@@@  @@@@@@@@$@   @@@     gg_</text>
-  <text x="442" y="35" class="base title">youssef@ellouz <tspan class="label">-----------------------------------------</tspan></text>
-  <text x="442" y="55" class="base" xml:space="preserve"><tspan class="label">. OS: </tspan><tspan class="label">...............................</tspan><tspan class="value"> Linux / Windows 11</tspan></text>
-  <text x="442" y="75" class="base" xml:space="preserve"><tspan class="label">. Uptime: </tspan><tspan class="label">.....................................</tspan><tspan class="value"> 22 years</tspan></text>
-  <text x="442" y="95" class="base" xml:space="preserve"><tspan class="label">. Host: </tspan><tspan class="label">...................</tspan><tspan class="value"> Data Analytics &amp; Development</tspan></text>
-  <text x="442" y="115" class="base" xml:space="preserve"><tspan class="label">. IDE: </tspan><tspan class="label">................</tspan><tspan class="value"> VS Code, Obsidian, Visual Studio</tspan></text>
-  <text x="442" y="135" class="base" xml:space="preserve"><tspan class="label">. Languages: </tspan><tspan class="label">.....................</tspan><tspan class="value"> Python, C#, C++, Java</tspan></text>
-  <text x="442" y="155" class="base" xml:space="preserve"><tspan class="label">. Hobbies: </tspan><tspan class="label">....................</tspan><tspan class="value"> Gym, Chess, Self-hosting</tspan></text>
-  <text x="442" y="175" class="base label">- Contact ----------------------------------------------</text>
-  <text x="442" y="195" class="base" xml:space="preserve"><tspan class="label">. GitHub: </tspan><tspan class="label">...........................</tspan><tspan class="value"> github.com/yellouz</tspan></text>
-  <text x="442" y="215" class="base" xml:space="preserve"><tspan class="label">. Email: </tspan><tspan class="label">...........................</tspan><tspan class="value"> youssef@example.com</tspan></text>
-  <text x="442" y="235" class="base label">- GitHub Stats -----------------------------------------</text>
-  <text x="442" y="255" class="base" xml:space="preserve"><tspan class="label">. Repos: </tspan><tspan class="label">............................................</tspan><tspan class="value"> 15</tspan></text>
-  <text x="442" y="275" class="base" xml:space="preserve"><tspan class="label">. Commits: </tspan><tspan class="label">.......................................</tspan><tspan class="value"> 1,420</tspan></text>
-  <text x="442" y="295" class="base" xml:space="preserve"><tspan class="label">. Stars: </tspan><tspan class="label">............................................</tspan><tspan class="value"> 48</tspan></text>
+  <text x="442" y="35" class="base title">youssef@ellouz <tspan class="label">-------------------------------------------</tspan></text>
+  <text x="442" y="55" class="base" xml:space="preserve"><tspan class="label">. OS: </tspan><tspan class="label">.................................</tspan><tspan class="value"> Linux / Windows 11</tspan></text>
+  <text x="442" y="75" class="base" xml:space="preserve"><tspan class="label">. Uptime: </tspan><tspan class="label">.............................</tspan><tspan class="value"> 22 years, 6 months</tspan></text>
+  <text x="442" y="95" class="base" xml:space="preserve"><tspan class="label">. Host: </tspan><tspan class="label">.....................</tspan><tspan class="value"> Data Analytics &amp; Development</tspan></text>
+  <text x="442" y="115" class="base" xml:space="preserve"><tspan class="label">. IDE: </tspan><tspan class="label">..................</tspan><tspan class="value"> VS Code, Obsidian, Visual Studio</tspan></text>
+  <text x="442" y="135" class="base" xml:space="preserve"><tspan class="label">. Languages: </tspan><tspan class="label">.......................</tspan><tspan class="value"> Python, C#, C++, Java</tspan></text>
+  <text x="442" y="155" class="base" xml:space="preserve"><tspan class="label">. Hobbies: </tspan><tspan class="label">......................</tspan><tspan class="value"> Gym, Chess, Self-hosting</tspan></text>
+  <text x="442" y="175" class="base" xml:space="preserve"><tspan class="section-title">- Contact </tspan><tspan class="label">------------------------------------------------</tspan></text>
+  <text x="442" y="195" class="base" xml:space="preserve"><tspan class="label">. GitHub: </tspan><tspan class="label">.............................</tspan><tspan class="value"> github.com/yellouz</tspan></text>
+  <text x="442" y="215" class="base" xml:space="preserve"><tspan class="label">. Email: </tspan><tspan class="label">.............................</tspan><tspan class="value"> youssef@example.com</tspan></text>
+  <text x="442" y="235" class="base" xml:space="preserve"><tspan class="section-title">- GitHub Stats </tspan><tspan class="label">-------------------------------------------</tspan></text>
+  <text x="442" y="255" class="base" xml:space="preserve"><tspan class="label">. Repos: </tspan><tspan class="label">..............................................</tspan><tspan class="value"> 15</tspan></text>
+  <text x="442" y="275" class="base" xml:space="preserve"><tspan class="label">. Commits: </tspan><tspan class="label">.........................................</tspan><tspan class="value"> 1,420</tspan></text>
+  <text x="442" y="295" class="base" xml:space="preserve"><tspan class="label">. Stars: </tspan><tspan class="label">..............................................</tspan><tspan class="value"> 48</tspan></text>
 </svg>
