@@ -111,23 +111,23 @@ def escape_xml(text):
 def build_svg(theme_name):
     t = THEMES[theme_name]
     
-    # 15px font scaling
-    line_height = 21
-    start_y = 30
-    char_width_px = 9.0  # Width of 1 char in 15px JetBrains Mono
+    # Scaled for 17px font
+    line_height = 24
+    start_y = 34
+    char_width_px = 10.2  # Character width in 17px JetBrains Mono
     
-    # Strictly bound height to ASCII Art length
+    # Bound height strictly to 22-line ASCII Art length
     ascii_line_count = len(ASCII_ART)
     last_ascii_y = start_y + ((ascii_line_count - 1) * line_height)
-    svg_height = last_ascii_y + 24
+    svg_height = last_ascii_y + 26
     
     # Left Column Width
     max_ascii_chars = max(len(line) for line in ASCII_ART)
     ascii_width_px = int(max_ascii_chars * char_width_px)
     ascii_x = 25
     
-    # Right Column Width Calculation
-    max_content_len = len(TITLE) + 10
+    # Calculate Required Character Width for Right Column
+    max_content_len = len(TITLE) + 12
     for item in DETAILS:
         if item and item[0] != "SECTION":
             label, val = item
@@ -141,15 +141,15 @@ def build_svg(theme_name):
     details_x = ascii_x + ascii_width_px + gap_between_columns
     details_width_px = int(TOTAL_RIGHT_CHARS * char_width_px)
     
-    svg_width = details_x + details_width_px + 30
+    svg_width = details_x + details_width_px + 35
     
     svg_lines = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{svg_width}" height="{svg_height}" viewBox="0 0 {svg_width} {svg_height}" fill="none">',
         '  <style>',
         '    @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;display=swap");',
-        '    .base { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; font-size: 15px; }',
-        f'    .title {{ font-weight: bold; font-size: 16px; fill: {t["title"]}; }}',
-        f'    .section-title {{ font-weight: bold; font-size: 15px; fill: {t["section"]}; }}',
+        '    .base { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; font-size: 17px; }',
+        f'    .title {{ font-weight: bold; font-size: 18px; fill: {t["title"]}; }}',
+        f'    .section-title {{ font-weight: bold; font-size: 18px; fill: {t["section"]}; }}',
         f'    .label {{ font-weight: bold; fill: {t["label"]}; }}',
         f'    .value {{ fill: {t["value"]}; }}',
         f'    .ascii {{ fill: {t["ascii"]}; white-space: pre; }}',
@@ -157,20 +157,23 @@ def build_svg(theme_name):
         f'  <rect width="{svg_width}" height="{svg_height}" rx="12" fill="{t["bg"]}" stroke="{t["border"]}" stroke-width="1.5"/>'
     ]
     
-    # Render ASCII Art (Left Column)
+    # Render ASCII Art (Left)
     current_y = start_y
     for line in ASCII_ART:
         svg_lines.append(f'  <text x="{ascii_x}" y="{current_y}" class="base ascii" xml:space="preserve">{escape_xml(line)}</text>')
         current_y += line_height
         
-    # Render Main Title Header (Right Column)
+    # Render Title Header (Right)
     current_y = start_y
     title_prefix = f"{TITLE} "
-    title_dashes = "-" * max(1, TOTAL_RIGHT_CHARS - len(title_prefix))
+    title_suffix = " - ─── -"
+    title_fill_count = max(1, TOTAL_RIGHT_CHARS - len(title_prefix) - len(title_suffix))
+    title_dashes = "─" * title_fill_count
+    
     svg_lines.append(
         f'  <text x="{details_x}" y="{current_y}" class="base" xml:space="preserve">'
         f'<tspan class="title">{escape_xml(title_prefix)}</tspan>'
-        f'<tspan class="label">{title_dashes}</tspan>'
+        f'<tspan class="label">{title_dashes}{title_suffix}</tspan>'
         f'</text>'
     )
     current_y += line_height
@@ -184,11 +187,14 @@ def build_svg(theme_name):
         label, val = item
         if label == "SECTION":
             prefix = f"- {val} "
-            dashes = "-" * max(1, TOTAL_RIGHT_CHARS - len(prefix))
+            suffix = " - ─── -"
+            fill_count = max(1, TOTAL_RIGHT_CHARS - len(prefix) - len(suffix))
+            dashes = "─" * fill_count
+            
             svg_lines.append(
                 f'  <text x="{details_x}" y="{current_y}" class="base" xml:space="preserve">'
                 f'<tspan class="section-title">{escape_xml(prefix)}</tspan>'
-                f'<tspan class="label">{dashes}</tspan>'
+                f'<tspan class="label">{dashes}{suffix}</tspan>'
                 f'</text>'
             )
         else:
