@@ -2,16 +2,26 @@ import os
 import datetime
 
 # ========================================================
-# 1. DYNAMIC UPTIME CALCULATION (Born April 2005)
+# 1. DYNAMIC EXACT UPTIME (April 8, 2005)
 # ========================================================
-BIRTH_YEAR = 2005
-BIRTH_MONTH = 4  # April
-
+BIRTH_DATE = datetime.date(2005, 4, 8)
 today = datetime.date.today()
-years = today.year - BIRTH_YEAR - ((today.month, today.day) < (BIRTH_MONTH, 1))
-months = (today.month - BIRTH_MONTH) % 12
 
-uptime_str = f"{years} years, {months} months"
+years = today.year - BIRTH_DATE.year
+months = today.month - BIRTH_DATE.month
+days = today.day - BIRTH_DATE.day
+
+if days < 0:
+    months -= 1
+    first_of_this_month = datetime.date(today.year, today.month, 1)
+    last_month = first_of_this_month - datetime.timedelta(days=1)
+    days += last_month.day
+
+if months < 0:
+    years -= 1
+    months += 12
+
+uptime_str = f"{years} years, {months} months, {days} days"
 
 # ========================================================
 # 2. YOUR ASCII ART
@@ -168,7 +178,6 @@ def build_svg(theme_name):
     # Render Details with Dynamic Vertical Padding
     for label, val in DETAILS:
         if label == "SECTION":
-            # Add dynamic vertical gap before section to balance height
             current_y += extra_section_padding
             prefix = f"- {val} "
             dashes = "-" * max(1, TOTAL_RIGHT_CHARS - len(prefix))
