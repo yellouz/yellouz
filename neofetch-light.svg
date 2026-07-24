@@ -7,28 +7,28 @@
     .ascii { fill: #0969da; white-space: pre; }
   </style>
   <rect width="824" height="495" rx="12" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
-  <text x="25" y="35" class="base ascii" xml:space="preserve">                        __,,,__</text>
-  <text x="25" y="55" class="base ascii" xml:space="preserve">                    _,g$        @g.</text>
-  <text x="25" y="75" class="base ascii" xml:space="preserve">                  _g              g_</text>
-  <text x="25" y="95" class="base ascii" xml:space="preserve">                 ,                  $_</text>
-  <text x="25" y="115" class="base ascii" xml:space="preserve">                g    $$$@$$$$@@@      w</text>
-  <text x="25" y="135" class="base ascii" xml:space="preserve">               _  $$ $$@$@$$$$$ $$$$</text>
-  <text x="25" y="155" class="base ascii" xml:space="preserve">               $ @@ $$$$$$$$@$$ @@$$  P</text>
-  <text x="25" y="175" class="base ascii" xml:space="preserve">                 $       @@$$        L</text>
-  <text x="25" y="195" class="base ascii" xml:space="preserve">               J  $      $@ @</text>
-  <text x="25" y="215" class="base ascii" xml:space="preserve">              ,g $@         $        @,</text>
-  <text x="25" y="235" class="base ascii" xml:space="preserve">               &amp;$$ $$ $  $ $@       $</text>
-  <text x="25" y="255" class="base ascii" xml:space="preserve">               $@$$$@$$ @&amp;@$$$$@@@ $$$@</text>
-  <text x="25" y="275" class="base ascii" xml:space="preserve">                $@$@@$$ $@$$$$ $@  @@@</text>
-  <text x="25" y="295" class="base ascii" xml:space="preserve">                 @ &amp;$ @@$    $  $@$$</text>
-  <text x="25" y="315" class="base ascii" xml:space="preserve">                 $@ @    @ $@$$ $   F</text>
-  <text x="25" y="335" class="base ascii" xml:space="preserve">                  $@$ $$   $</text>
-  <text x="25" y="355" class="base ascii" xml:space="preserve">                 _  $$$$$   $  @$$ g</text>
-  <text x="25" y="375" class="base ascii" xml:space="preserve">                y@@  $ $@@$$      @@@ ;</text>
-  <text x="25" y="395" class="base ascii" xml:space="preserve">              y @@@  @            @@@@@  r</text>
-  <text x="25" y="415" class="base ascii" xml:space="preserve">          _gg  @@@@   $$$    $     @@@@@@ &amp;gg_</text>
-  <text x="25" y="435" class="base ascii" xml:space="preserve">    __,&amp;   @   @@@@@@    @    $$  @@@@@@</text>
-  <text x="25" y="455" class="base ascii" xml:space="preserve">_gg     @@@   @$@@@@@@@         @@@@@@@@     @@@</text>
+  <text x="25" y="35" class="base ascii" xml:space="preserve">                    __,,,__</text>
+  <text x="25" y="55" class="base ascii" xml:space="preserve">                _,g$       $g,_</text>
+  <text x="25" y="75" class="base ascii" xml:space="preserve">               _g              g_</text>
+  <text x="25" y="95" class="base ascii" xml:space="preserve">             ,                   ,</text>
+  <text x="25" y="115" class="base ascii" xml:space="preserve">            g    $$$@$$$$$@$$$    g</text>
+  <text x="25" y="135" class="base ascii" xml:space="preserve">             _  $$ $$@$@$@$$ $$  _</text>
+  <text x="25" y="155" class="base ascii" xml:space="preserve">            $ @@ $$$$$$$$$$$$$$ @@ $</text>
+  <text x="25" y="175" class="base ascii" xml:space="preserve">             $       @@$@@       $</text>
+  <text x="25" y="195" class="base ascii" xml:space="preserve">                 J  $      $  J</text>
+  <text x="25" y="215" class="base ascii" xml:space="preserve">           ,g $@               @$ g,</text>
+  <text x="25" y="235" class="base ascii" xml:space="preserve">            $&amp;$$ $$ $  $  $ $$ $$&amp;$</text>
+  <text x="25" y="255" class="base ascii" xml:space="preserve">            $@$$$@$$ @&amp;@@&amp;@ $$@$$$@$</text>
+  <text x="25" y="275" class="base ascii" xml:space="preserve">             $@$@@$$ $@$$@$ $$@@$@$</text>
+  <text x="25" y="295" class="base ascii" xml:space="preserve">              @ &amp;$ @@$   $@@ $&amp; @</text>
+  <text x="25" y="315" class="base ascii" xml:space="preserve">              $@ @    @  @    @ @$</text>
+  <text x="25" y="335" class="base ascii" xml:space="preserve">                   $@$ $$ $@$</text>
+  <text x="25" y="355" class="base ascii" xml:space="preserve">              _  $$$$$   $$$$$  _</text>
+  <text x="25" y="375" class="base ascii" xml:space="preserve">            y@@  $ $@@$$$@@$ $  @@y</text>
+  <text x="25" y="395" class="base ascii" xml:space="preserve">          y @@@  @            @  @@@ y</text>
+  <text x="25" y="415" class="base ascii" xml:space="preserve">      _gg  @@@@   $$$      $$$   @@@@  gg_</text>
+  <text x="25" y="435" class="base ascii" xml:space="preserve">      __,&amp;   @   @@@@@@  @@@@@@   @   &amp;,__</text>
+  <text x="25" y="455" class="base ascii" xml:space="preserve">_gg     @@@   @$@@@@@@@  @@@@@@@$@   @@@     gg_</text>
   <text x="434" y="35" class="base title">youssef@ellouz <tspan class="label">--------------------------</tspan></text>
   <text x="434" y="55" class="base"><tspan class="label">OS: </tspan><tspan class="label">................ </tspan><tspan class="value">Linux / Windows 11</tspan></text>
   <text x="434" y="75" class="base"><tspan class="label">Uptime: </tspan><tspan class="label">............ </tspan><tspan class="value">22 years</tspan></text>
