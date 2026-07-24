@@ -1,7 +1,7 @@
 import os
 
 # ========================================================
-# 1. YOUR NEW ASCII ART
+# 1. YOUR ASCII ART
 # ========================================================
 RAW_ASCII_ART = [
     r"                    __,,,__                      ",
@@ -28,12 +28,15 @@ RAW_ASCII_ART = [
     r"_gg     @@@   @$@@@@@@@  @@@@@@@@$@   @@@     gg_",
 ]
 
+ASCII_ART = [line.replace("\xa0", " ").rstrip() for line in RAW_ASCII_ART]
+
 # ========================================================
-# 2. PROFILE DETAILS & STATS
+# 2. PROFILE DETAILS & STATS (With Sections)
 # ========================================================
 USERNAME = "yellouz"
 TITLE = "youssef@ellouz"
 
+# Use ("SECTION", "Section Name") to create divider bars like - Contact -----------
 DETAILS = [
     ("OS", "Linux / Windows 11"),
     ("Uptime", "22 years"),
@@ -41,22 +44,17 @@ DETAILS = [
     ("IDE", "VS Code, Obsidian, Visual Studio"),
     ("Languages", "Python, C#, C++, Java"),
     ("Hobbies", "Gym, Chess, Self-hosting"),
-    ("---", "------------------------------------------"),
+    ("SECTION", "Contact"),
     ("GitHub", f"github.com/{USERNAME}"),
-    ("---", "------------------------------------------"),
+    ("Email", "youssef@example.com"),
+    ("SECTION", "GitHub Stats"),
     ("Repos", "15"),
     ("Commits", "1,420"),
     ("Stars", "48")
 ]
 
 # ========================================================
-# 3. CLEAN & SANITIZE ASCII ART
-# ========================================================
-# Replace non-breaking spaces (\xa0) with standard spaces and strip trailing whitespace
-ASCII_ART = [line.replace("\xa0", " ").rstrip() for line in RAW_ASCII_ART]
-
-# ========================================================
-# 4. SVG THEMES & DYNAMIC RENDERER
+# 3. SVG THEMES & RIGHT-ALIGNMENT RENDERER
 # ========================================================
 THEMES = {
     "dark": {
@@ -92,32 +90,32 @@ def build_svg(theme_name):
     total_lines = max(len(ASCII_ART), len(DETAILS) + 1)
     svg_height = start_y + (total_lines * line_height) + 20
     
-    char_width_px = 7.8  # Character width in 13px JetBrains Mono / Consolas
+    char_width_px = 7.8  # Character width in 13px JetBrains Mono
     
     # --- 1. Left Column Calculations ---
     max_ascii_chars = max(len(line) for line in ASCII_ART)
     ascii_width_px = int(max_ascii_chars * char_width_px)
     ascii_x = 25
     
-    # --- 2. Right Column Calculations ---
+    # --- 2. Calculate Fixed Line Width for Right Column ---
+    # Find longest content to set a uniform TOTAL_RIGHT_CHARS width
+    max_content_len = len(TITLE) + 10
+    for item in DETAILS:
+        label, val = item
+        if label != "SECTION":
+            min_line_len = len(f". {label}: ") + len(f" {val}") + 3  # label + min 3 dots + val
+            if min_line_len > max_content_len:
+                max_content_len = min_line_len
+
+    # Set total column width (at least 56 characters wide)
+    TOTAL_RIGHT_CHARS = max(56, max_content_len)
+    
     gap_between_columns = 35
     details_x = ascii_x + ascii_width_px + gap_between_columns
+    details_width_px = int(TOTAL_RIGHT_CHARS * char_width_px)
     
-    # Find the maximum character width of any line in the details column
-    max_detail_chars = len(f"{TITLE} ------------------------------------------")
-    for label, val in DETAILS:
-        if label == "---":
-            max_detail_chars = max(max_detail_chars, len(val))
-        else:
-            dots_count = max(1, 18 - len(label))
-            line_len = len(label) + 2 + dots_count + 1 + len(val)
-            max_detail_chars = max(max_detail_chars, line_len)
-            
-    details_width_px = int(max_detail_chars * char_width_px)
-    right_padding = 30
-    
-    # Dynamic SVG Total Width
-    svg_width = details_x + details_width_px + right_padding
+    # Dynamic Card Width
+    svg_width = details_x + details_width_px + 30
     
     svg_lines = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{svg_width}" height="{svg_height}" viewBox="0 0 {svg_width} {svg_height}" fill="none">',
@@ -137,23 +135,31 @@ def build_svg(theme_name):
         svg_lines.append(f'  <text x="{ascii_x}" y="{current_y}" class="base ascii" xml:space="preserve">{escape_xml(line)}</text>')
         current_y += line_height
         
-    # Render Title (Right)
+    # Render Title (Right Header)
     current_y = start_y
-    divider = "-" * (40 - len(TITLE))
-    svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base title">{escape_xml(TITLE)} <tspan class="label">{divider}</tspan></text>')
+    title_dashes = "-" * (TOTAL_RIGHT_CHARS - len(TITLE) - 1)
+    svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base title">{escape_xml(TITLE)} <tspan class="label">{title_dashes}</tspan></text>')
     current_y += line_height
     
-    # Render Details (Right)
+    # Render Details with Dynamic Dot Fill for Right Alignment
     for label, val in DETAILS:
-        if label == "---":
-            svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base label">{val}</text>')
+        if label == "SECTION":
+            # Render section divider e.g. - Contact -----------------------
+            dashes = "-" * (TOTAL_RIGHT_CHARS - len(val) - 3)
+            svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base label">- {escape_xml(val)} {dashes}</text>')
         else:
-            dots = "." * max(1, (18 - len(label)))
+            prefix = f". {label}: "
+            suffix = f" {val}"
+            
+            # Calculate exactly how many dots are needed to reach TOTAL_RIGHT_CHARS
+            dots_count = max(1, TOTAL_RIGHT_CHARS - len(prefix) - len(suffix))
+            dots = "." * dots_count
+            
             svg_lines.append(
-                f'  <text x="{details_x}" y="{current_y}" class="base">'
-                f'<tspan class="label">{escape_xml(label)}: </tspan>'
-                f'<tspan class="label">{dots} </tspan>'
-                f'<tspan class="value">{escape_xml(val)}</tspan>'
+                f'  <text x="{details_x}" y="{current_y}" class="base" xml:space="preserve">'
+                f'<tspan class="label">{escape_xml(prefix)}</tspan>'
+                f'<tspan class="label">{dots}</tspan>'
+                f'<tspan class="value">{escape_xml(suffix)}</tspan>'
                 f'</text>'
             )
         current_y += line_height
@@ -163,7 +169,7 @@ def build_svg(theme_name):
     filename = f"neofetch-{theme_name}.svg"
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(svg_lines))
-    print(f"Generated {filename} (Card Width: {svg_width}px, Stats Offset: {details_x}px)")
+    print(f"Generated {filename} (Total Right Column Width: {TOTAL_RIGHT_CHARS} chars)")
 
 if __name__ == "__main__":
     build_svg("dark")
