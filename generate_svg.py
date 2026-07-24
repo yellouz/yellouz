@@ -1,7 +1,20 @@
 import os
+import datetime
 
 # ========================================================
-# 1. YOUR ASCII ART
+# 1. DYNAMIC UPTIME CALCULATION (Born April 2005)
+# ========================================================
+BIRTH_YEAR = 2005
+BIRTH_MONTH = 4  # April
+
+today = datetime.date.today()
+years = today.year - BIRTH_YEAR - ((today.month, today.day) < (BIRTH_MONTH, 1))
+months = (today.month - BIRTH_MONTH) % 12
+
+uptime_str = f"{years} years, {months} months"
+
+# ========================================================
+# 2. YOUR ASCII ART
 # ========================================================
 RAW_ASCII_ART = [
     r"                    __,,,__                      ",
@@ -31,15 +44,14 @@ RAW_ASCII_ART = [
 ASCII_ART = [line.replace("\xa0", " ").rstrip() for line in RAW_ASCII_ART]
 
 # ========================================================
-# 2. PROFILE DETAILS & STATS (Grouped by Sections)
+# 3. PROFILE DETAILS & STATS
 # ========================================================
 USERNAME = "yellouz"
 TITLE = "youssef@ellouz"
 
-# Format: ("SECTION", "Section Name") creates a styled blue section header
 DETAILS = [
     ("OS", "Linux / Windows 11"),
-    ("Uptime", "22 years, 6 months"),
+    ("Uptime", uptime_str),
     ("Host", "Data Analytics & Development"),
     ("IDE", "VS Code, Obsidian, Visual Studio"),
     ("Languages", "Python, C#, C++, Java"),
@@ -54,26 +66,26 @@ DETAILS = [
 ]
 
 # ========================================================
-# 3. SVG THEMES & BLUE COLOR PALETTE
+# 4. CARD THEMES & ELEGANT BACKGROUNDS
 # ========================================================
 THEMES = {
     "dark": {
-        "bg": "#0d1117",
-        "border": "#30363d",
-        "title": "#58a6ff",      # Light Blue Accent
-        "section": "#79c0ff",    # Vibrant Blue for Sections
-        "label": "#8b949e",      # Muted Gray for Labels & Dots
-        "value": "#c9d1d9",      # Off-White for Values
-        "ascii": "#58a6ff"       # Blue for ASCII Avatar
+        "bg": "#161b22",        # GitHub's elevated card dark slate-grey
+        "border": "#30363d",    # Card border
+        "title": "#58a6ff",     # Light Blue Header Accent
+        "section": "#79c0ff",   # Section Header Accent
+        "label": "#8b949e",     # Muted Gray Labels
+        "value": "#c9d1d9",     # Clean Off-White Values
+        "ascii": "#58a6ff"      # ASCII Portrait Accent
     },
     "light": {
-        "bg": "#ffffff",
+        "bg": "#f6f8fa",        # GitHub's elevated card light grey
         "border": "#d0d7de",
-        "title": "#0969da",      # Medium Blue Accent
-        "section": "#0550ae",    # Deep Blue for Sections
-        "label": "#57606a",      # Muted Gray for Labels & Dots
-        "value": "#24292f",      # Dark Charcoal for Values
-        "ascii": "#0969da"       # Blue for ASCII Avatar
+        "title": "#0969da",
+        "section": "#0550ae",
+        "label": "#57606a",
+        "value": "#24292f",
+        "ascii": "#0969da"
     }
 }
 
@@ -89,17 +101,29 @@ def build_svg(theme_name):
     
     line_height = 20
     start_y = 35
-    total_lines = max(len(ASCII_ART), len(DETAILS) + 1)
-    svg_height = start_y + (total_lines * line_height) + 20
     
-    char_width_px = 7.8  # Character width in 13px JetBrains Mono
+    # Measure column lengths
+    ascii_line_count = len(ASCII_ART)
+    details_line_count = len(DETAILS) + 1  # Including title
     
-    # --- 1. Left Column Calculations ---
+    # Calculate vertical spacing adjustment to stretch details column evenly
+    num_sections = sum(1 for label, _ in DETAILS if label == "SECTION")
+    height_difference = max(0, (ascii_line_count - details_line_count) * line_height)
+    
+    # Distribute the height gap evenly before section dividers
+    extra_section_padding = height_difference // max(1, num_sections)
+    
+    total_lines = max(ascii_line_count, details_line_count)
+    svg_height = start_y + (total_lines * line_height) + height_difference + 20
+    
+    char_width_px = 7.8
+    
+    # Left Column Width
     max_ascii_chars = max(len(line) for line in ASCII_ART)
     ascii_width_px = int(max_ascii_chars * char_width_px)
     ascii_x = 25
     
-    # --- 2. Right Column Calculations ---
+    # Right Column Width Calculation
     max_content_len = len(TITLE) + 10
     for item in DETAILS:
         label, val = item
@@ -141,9 +165,11 @@ def build_svg(theme_name):
     svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base title">{escape_xml(TITLE)} <tspan class="label">{title_dashes}</tspan></text>')
     current_y += line_height
     
-    # Render Details & Distinct Sections
+    # Render Details with Dynamic Vertical Padding
     for label, val in DETAILS:
         if label == "SECTION":
+            # Add dynamic vertical gap before section to balance height
+            current_y += extra_section_padding
             prefix = f"- {val} "
             dashes = "-" * max(1, TOTAL_RIGHT_CHARS - len(prefix))
             svg_lines.append(
