@@ -67,7 +67,7 @@ DETAILS = [
     ("IDE", "VS Code, Obsidian"),
     ("Languages.Programming", "Python, C#, C/C++, Java"),
     ("Languages.Computer", "HTML, CSS, JSON, LaTeX, Markdown"),
-    ("Languages.World", "Arabic, Tamazight, English, Frensh"),
+    ("Languages.World", "ⵜⴰⵎⴰⵣⵉⵖⵜ, Arabic, English, Frensh"),
     ("Hobbies", "Gym, Chess, Self-hosting"),
     (),
     ("SECTION", "Contact"),
