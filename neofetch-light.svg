@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="495" viewBox="0 0 860 495" fill="none">
+  <style>
+    .base { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; font-size: 13px; }
+    .title { font-weight: bold; fill: #0969da; }
+    .label { font-weight: bold; fill: #57606a; }
+    .value { fill: #24292f; }
+    .ascii { fill: #0969da; white-space: pre; }
+  </style>
+  <rect width="860" height="495" rx="12" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="20" y="35" class="base ascii" xml:space="preserve">                             __,,,__</text>
+  <text x="20" y="55" class="base ascii" xml:space="preserve">                        _,g$        @g.</text>
+  <text x="20" y="75" class="base ascii" xml:space="preserve">                      _g              g_</text>
+  <text x="20" y="95" class="base ascii" xml:space="preserve">                     ,                  $_</text>
+  <text x="20" y="115" class="base ascii" xml:space="preserve">                    g    $$$@$$$$@@@      w</text>
+  <text x="20" y="135" class="base ascii" xml:space="preserve">                   _  $$ $$@$@$$$$$ $$$$</text>
+  <text x="20" y="155" class="base ascii" xml:space="preserve">                   $ @@ $$$$$$$$@$$ @@$$  P</text>
+  <text x="20" y="175" class="base ascii" xml:space="preserve">                     $       @@$$        L</text>
+  <text x="20" y="195" class="base ascii" xml:space="preserve">                   J  $      $@ @</text>
+  <text x="20" y="215" class="base ascii" xml:space="preserve">                  ,g $@         $        @,</text>
+  <text x="20" y="235" class="base ascii" xml:space="preserve">                   &amp;$$ $$ $  $ $@       $</text>
+  <text x="20" y="255" class="base ascii" xml:space="preserve">                   $@$$$@$$ @&amp;@$$$$@@@ $$$@</text>
+  <text x="20" y="275" class="base ascii" xml:space="preserve">                    $@$@@$$ $@$$$$ $@  @@@</text>
+  <text x="20" y="295" class="base ascii" xml:space="preserve">                     @ &amp;$ @@$    $  $@$$</text>
+  <text x="20" y="315" class="base ascii" xml:space="preserve">                     $@ @    @ $@$$ $   F</text>
+  <text x="20" y="335" class="base ascii" xml:space="preserve">                      $@$ $$   $</text>
+  <text x="20" y="355" class="base ascii" xml:space="preserve">                     _  $$$$$   $  @$$ g</text>
+  <text x="20" y="375" class="base ascii" xml:space="preserve">                    y@@  $ $@@$$      @@@ ;</text>
+  <text x="20" y="395" class="base ascii" xml:space="preserve">                  y @@@  @            @@@@@  r</text>
+  <text x="20" y="415" class="base ascii" xml:space="preserve">              _gg  @@@@   $$$    $     @@@@@@ &amp;gg_</text>
+  <text x="20" y="435" class="base ascii" xml:space="preserve">        __,&amp;   @   @@@@@@    @    $$  @@@@@@</text>
+  <text x="20" y="455" class="base ascii" xml:space="preserve">    _gg     @@@   @$@@@@@@@         @@@@@@@@     @@@</text>
+  <text x="380" y="35" class="base title">youssef@ellouz <tspan class="label">--------------------------</tspan></text>
+  <text x="380" y="55" class="base"><tspan class="label">OS: </tspan><tspan class="label">................ </tspan><tspan class="value">Windows 11</tspan></text>
+  <text x="380" y="75" class="base"><tspan class="label">Uptime: </tspan><tspan class="label">............ </tspan><tspan class="value">22 years</tspan></text>
+  <text x="380" y="95" class="base"><tspan class="label">Host: </tspan><tspan class="label">.............. </tspan><tspan class="value">Data Analytics &amp; Development</tspan></text>
+  <text x="380" y="115" class="base"><tspan class="label">IDE: </tspan><tspan class="label">............... </tspan><tspan class="value">VS Code, Obsidian, Visual Studio</tspan></text>
+  <text x="380" y="135" class="base"><tspan class="label">Languages: </tspan><tspan class="label">......... </tspan><tspan class="value">Python, C#, C++, Java</tspan></text>
+  <text x="380" y="155" class="base"><tspan class="label">Hobbies: </tspan><tspan class="label">........... </tspan><tspan class="value">Gym, Chess, Self-hosting</tspan></text>
+  <text x="380" y="175" class="base label">------------------------------------------</text>
+  <text x="380" y="195" class="base"><tspan class="label">GitHub: </tspan><tspan class="label">............ </tspan><tspan class="value">github.com/yellouz</tspan></text>
+  <text x="380" y="215" class="base label">------------------------------------------</text>
+  <text x="380" y="235" class="base"><tspan class="label">Repos: </tspan><tspan class="label">............. </tspan><tspan class="value">15</tspan></text>
+  <text x="380" y="255" class="base"><tspan class="label">Commits: </tspan><tspan class="label">........... </tspan><tspan class="value">1,420</tspan></text>
+  <text x="380" y="275" class="base"><tspan class="label">Stars: </tspan><tspan class="label">............. </tspan><tspan class="value">48</tspan></text>
+</svg>
