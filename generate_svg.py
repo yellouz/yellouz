@@ -24,7 +24,7 @@ if months < 0:
 uptime_str = f"{years} years, {months} months, {days} days"
 
 # ========================================================
-# 2. YOUR ASCII ART
+# 2. YOUR ASCII ART (22 Lines)
 # ========================================================
 RAW_ASCII_ART = [
     r"                    __,,,__                      ",
@@ -59,6 +59,7 @@ ASCII_ART = [line.replace("\xa0", " ").rstrip() for line in RAW_ASCII_ART]
 USERNAME = "yellouz"
 TITLE = "youssef@ellouz"
 
+# Empty tuple () adds a clean blank line break
 DETAILS = [
     ("OS", "Linux / Windows 11"),
     ("Uptime", uptime_str),
@@ -66,9 +67,11 @@ DETAILS = [
     ("IDE", "VS Code, Obsidian, Visual Studio"),
     ("Languages", "Python, C#, C++, Java"),
     ("Hobbies", "Gym, Chess, Self-hosting"),
+    (),
     ("SECTION", "Contact"),
     ("GitHub", f"github.com/{USERNAME}"),
     ("Email", "youssef@example.com"),
+    (),
     ("SECTION", "GitHub Stats"),
     ("Repos", "15"),
     ("Commits", "1,420"),
@@ -80,16 +83,16 @@ DETAILS = [
 # ========================================================
 THEMES = {
     "dark": {
-        "bg": "#161b22",        # GitHub's elevated card dark slate-grey
-        "border": "#30363d",    # Card border
-        "title": "#58a6ff",     # Light Blue Header Accent
-        "section": "#79c0ff",   # Section Header Accent
-        "label": "#8b949e",     # Muted Gray Labels
-        "value": "#c9d1d9",     # Clean Off-White Values
-        "ascii": "#58a6ff"      # ASCII Portrait Accent
+        "bg": "#161b22",        # GitHub elevated card slate dark
+        "border": "#30363d",
+        "title": "#58a6ff",
+        "section": "#79c0ff",
+        "label": "#8b949e",
+        "value": "#c9d1d9",
+        "ascii": "#58a6ff"
     },
     "light": {
-        "bg": "#f6f8fa",        # GitHub's elevated card light grey
+        "bg": "#f6f8fa",        # GitHub elevated card light grey
         "border": "#d0d7de",
         "title": "#0969da",
         "section": "#0550ae",
@@ -109,12 +112,14 @@ def escape_xml(text):
 def build_svg(theme_name):
     t = THEMES[theme_name]
     
-    line_height = 20
-    start_y = 30
+    # Tight line height to prevent ASCII stretching
+    line_height = 18
+    start_y = 28
     
-    # Calculate exact tight height based on the maximum line count (ASCII Art = 22 lines)
-    total_lines = max(len(ASCII_ART), len(DETAILS) + 1)
-    svg_height = start_y + (total_lines * line_height) + 15
+    # Total card height strictly bound to ASCII Art height + symmetrical 18px padding
+    ascii_line_count = len(ASCII_ART)
+    last_ascii_y = start_y + ((ascii_line_count - 1) * line_height)
+    svg_height = last_ascii_y + 21
     
     char_width_px = 7.8
     
@@ -126,8 +131,8 @@ def build_svg(theme_name):
     # Right Column Width Calculation
     max_content_len = len(TITLE) + 10
     for item in DETAILS:
-        label, val = item
-        if label != "SECTION":
+        if item and item[0] != "SECTION":
+            label, val = item
             min_line_len = len(f". {label}: ") + len(f" {val}") + 3
             if min_line_len > max_content_len:
                 max_content_len = min_line_len
@@ -165,8 +170,14 @@ def build_svg(theme_name):
     svg_lines.append(f'  <text x="{details_x}" y="{current_y}" class="base title">{escape_xml(TITLE)} <tspan class="label">{title_dashes}</tspan></text>')
     current_y += line_height
     
-    # Render Details with Uniform 20px Line Height (No awkward gaps)
-    for label, val in DETAILS:
+    # Render Details
+    for item in DETAILS:
+        if not item:
+            # Blank line space
+            current_y += line_height
+            continue
+            
+        label, val = item
         if label == "SECTION":
             prefix = f"- {val} "
             dashes = "-" * max(1, TOTAL_RIGHT_CHARS - len(prefix))
@@ -196,7 +207,7 @@ def build_svg(theme_name):
     filename = f"neofetch-{theme_name}.svg"
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(svg_lines))
-    print(f"Generated {filename} successfully!")
+    print(f"Generated {filename} successfully! (Card Height: {svg_height}px)")
 
 if __name__ == "__main__":
     build_svg("dark")
