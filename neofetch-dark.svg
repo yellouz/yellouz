@@ -35,7 +35,7 @@
   <text x="25" y="538" class="base ascii" xml:space="preserve">_gg     @@@   @$@@@@@@@  @@@@@@@@$@   @@@     gg_</text>
   <text x="564" y="34" class="base" xml:space="preserve"><tspan class="title">youssef@ellouz </tspan><tspan class="label">─────────────────────────────────────── - ─── -</tspan></text>
   <text x="564" y="58" class="base" xml:space="preserve"><tspan class="label">. OS: </tspan><tspan class="label">.............................................</tspan><tspan class="value"> Windows 11</tspan></text>
-  <text x="564" y="82" class="base" xml:space="preserve"><tspan class="label">. Uptime: </tspan><tspan class="label">........................</tspan><tspan class="value"> 21 years, 3 months, 21 days</tspan></text>
+  <text x="564" y="82" class="base" xml:space="preserve"><tspan class="label">. Uptime: </tspan><tspan class="label">........................</tspan><tspan class="value"> 21 years, 3 months, 22 days</tspan></text>
   <text x="564" y="106" class="base" xml:space="preserve"><tspan class="label">. Host: </tspan><tspan class="label">.........................</tspan><tspan class="value"> Data Analytics &amp; Development</tspan></text>
   <text x="564" y="130" class="base" xml:space="preserve"><tspan class="label">. IDE: </tspan><tspan class="label">.....................................</tspan><tspan class="value"> VS Code, Obsidian</tspan></text>
   <text x="564" y="154" class="base" xml:space="preserve"><tspan class="label">. Languages.Programming: </tspan><tspan class="label">.............</tspan><tspan class="value"> Python, C#, C/C++, Java</tspan></text>
@@ -49,5 +49,5 @@
   <text x="564" y="394" class="base" xml:space="preserve"><tspan class="label">. Repos: </tspan><tspan class="label">..................................................</tspan><tspan class="value"> 34</tspan></text>
   <text x="564" y="418" class="base" xml:space="preserve"><tspan class="label">. Commits: </tspan><tspan class="label">...............................................</tspan><tspan class="value"> 231</tspan></text>
   <text x="564" y="442" class="base" xml:space="preserve"><tspan class="label">. Stars: </tspan><tspan class="label">...................................................</tspan><tspan class="value"> 5</tspan></text>
-  <text x="564" y="466" class="base" xml:space="preserve"><tspan class="label">. Lines of Code: </tspan><tspan class="label">.................</tspan><tspan class="value"> 9,385 ( </tspan><tspan class="add">11,182++</tspan><tspan class="value">, </tspan><tspan class="del">1,797--</tspan><tspan class="value"> )</tspan></text>
+  <text x="564" y="466" class="base" xml:space="preserve"><tspan class="label">. Lines of Code: </tspan><tspan class="label">.................</tspan><tspan class="value"> 9,430 ( </tspan><tspan class="add">11,235++</tspan><tspan class="value">, </tspan><tspan class="del">1,805--</tspan><tspan class="value"> )</tspan></text>
 </svg>
